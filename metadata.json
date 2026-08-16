@@ -1,0 +1,6 @@
+{
+  "name": "Oficina Transparente Auto",
+  "description": "O melhor site de oficina mecânica focado em conveniência extrema, transparência e agendamento online.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
