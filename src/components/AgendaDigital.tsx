@@ -1,17 +1,9 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { Calendar as CalendarIcon, Clock, MapPin, Truck, Check } from "lucide-react";
+import { Clock, MapPin, Truck } from "lucide-react";
 import { motion } from "motion/react";
 
-const SERVICOS_AGENDAMENTO = ["Revisão Geral", "Mudança de Óleo", "Alinhamento 3D", "Travões", "Check-up"];
-const DATAS = ["Hoje", "Amanhã", "Seg, 24", "Ter, 25", "Qua, 26"];
-const HORARIOS = ["09:00", "10:30", "11:00", "14:00", "15:30", "17:00"];
-
 export function AgendaDigital() {
-  const [servicoSelecionado, setServicoSelecionado] = useState(SERVICOS_AGENDAMENTO[0]);
-  const [dataSelecionada, setDataSelecionada] = useState(DATAS[1]);
-  const [horaSelecionada, setHoraSelecionada] = useState(HORARIOS[0]);
-  const [recolha, setRecolha] = useState(false);
   const [agendado, setAgendado] = useState(false);
 
   const handleAgendar = () => {
@@ -89,69 +81,81 @@ export function AgendaDigital() {
           </div>
 
           <div className="w-full bg-zinc-900 rounded-2xl border border-zinc-800 p-5 sm:p-6 md:p-8 shadow-xl max-w-full overflow-hidden">
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <CalendarIcon className="w-5 h-5 text-blue-500" />
-              Detalhes da Marcação
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 text-center uppercase tracking-tight">
+              Contacte-nos e marque a <span className="text-blue-500">sua revisão</span>
             </h3>
 
-            <div className="mb-6">
-              <label className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wide block mb-3">Serviço Pretendido</label>
-              <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-4 pt-1 px-1 -mx-1 snap-x snap-mandatory scrollbar-hide">
-                {SERVICOS_AGENDAMENTO.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setServicoSelecionado(s)}
-                    className={`snap-start shrink-0 px-4 sm:px-5 py-2 sm:py-3 rounded-xl whitespace-nowrap text-sm sm:text-base font-medium transition-all ${servicoSelecionado === s ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'}`}
-                  >
-                    {s}
-                  </button>
-                ))}
+            <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); handleAgendar(); }}>
+              {/* Dados do Veículo */}
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide border-b border-zinc-800 pb-2">Dados do Veículo</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-300 block mb-1">Matrícula*</label>
+                    <input required type="text" placeholder="Insira aqui a matrícula" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all uppercase" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-300 block mb-1">Marca*</label>
+                    <input required type="text" placeholder="Insira aqui a marca" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all capitalize" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-300 block mb-1">Modelo</label>
+                    <input type="text" placeholder="Insira aqui o modelo" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all capitalize" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-300 block mb-1">Quilometragem*</label>
+                    <input required type="text" placeholder="Quantos km tem?" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="mb-6">
-              <label className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wide block mb-3">Datas Disponíveis</label>
-              <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-4 pt-1 px-1 -mx-1 snap-x snap-mandatory scrollbar-hide">
-                {DATAS.map((d) => (
-                  <button
-                    key={d}
-                    onClick={() => setDataSelecionada(d)}
-                    className={`snap-start shrink-0 px-4 sm:px-5 py-2 sm:py-3 rounded-xl whitespace-nowrap text-sm sm:text-base font-medium transition-all ${dataSelecionada === d ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30 scale-100 sm:scale-105' : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'}`}
-                  >
-                    {d}
-                  </button>
-                ))}
+              {/* Indicação das falhas */}
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide border-b border-zinc-800 pb-2">Indicação das Falhas</h4>
+                <div>
+                  <textarea placeholder="Descreva aqui as falhas ou avarias do seu veículo..." rows={3} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none"></textarea>
+                </div>
               </div>
-            </div>
 
-            <div className="mb-8">
-              <label className="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wide block mb-3">Horários ({dataSelecionada})</label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
-                {HORARIOS.map((h) => (
-                  <button
-                    key={h}
-                    onClick={() => setHoraSelecionada(h)}
-                    className={`py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-medium transition-colors ${horaSelecionada === h ? 'bg-white text-zinc-900 border-2 border-white' : 'bg-zinc-950 border border-zinc-800 text-zinc-400 hover:border-zinc-600'}`}
-                  >
-                    {h}
-                  </button>
-                ))}
+              {/* Dados Pessoais */}
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide border-b border-zinc-800 pb-2">Dados Pessoais</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-300 block mb-1">Nome*</label>
+                    <input required type="text" placeholder="O seu nome" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-300 block mb-1">E-Mail</label>
+                    <input type="email" placeholder="O seu e-mail" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-300 block mb-1">Telefone*</label>
+                    <input required type="tel" placeholder="O seu telefone" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-300 block mb-1">Contribuinte</label>
+                    <input type="text" placeholder="O seu número de contribuinte" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" />
+                  </div>
+                </div>
               </div>
-            </div>
+              
+              <div className="text-xs text-zinc-500 text-right">*Campos obrigatórios</div>
 
-            <div className="mb-6 sm:mb-8 p-3 sm:p-4 rounded-xl bg-zinc-950 border border-zinc-800 flex items-start gap-3 sm:gap-4 cursor-pointer hover:border-blue-500/50 transition-colors" onClick={() => setRecolha(!recolha)}>
-              <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${recolha ? 'bg-blue-500 border-blue-500' : 'border-zinc-600 bg-zinc-900'}`}>
-                {recolha && <Check className="w-3 h-3 sm:w-4 sm:h-4 text-white" />}
+              <div className="pt-2 space-y-3">
+                <Button type="submit" size="lg" className="w-full text-lg h-14 font-bold tracking-wide" disabled={agendado}>
+                  {agendado ? "ENVIADO COM SUCESSO! 🎉" : "ENVIAR"}
+                </Button>
+                
+                <a href="tel:+244936963877" className="w-full h-14 flex items-center justify-center bg-zinc-950 hover:bg-zinc-800 text-white border border-zinc-800 rounded-xl font-bold transition-colors text-lg tracking-wide">
+                  +244 936 963 877
+                </a>
+                
+                <a href="mailto:geral@lidermobile.com" className="w-full h-14 flex items-center justify-center bg-zinc-950 hover:bg-zinc-800 text-white border border-zinc-800 rounded-xl font-bold transition-colors text-lg tracking-wide">
+                  geral@lidermobile.com
+                </a>
               </div>
-              <div>
-                <div className="text-white font-bold text-sm sm:text-base mb-1">Quero que recolham o meu carro</div>
-                <div className="text-xs sm:text-sm text-zinc-500">Recolha e entrega ao domicílio (+20.000 Kz)</div>
-              </div>
-            </div>
-
-            <Button size="lg" className="w-full text-lg" onClick={handleAgendar} disabled={agendado}>
-              {agendado ? "Agendado com Sucesso! 🎉" : "Confirmar Agendamento"}
-            </Button>
+            </form>
           </div>
         </div>
       </div>

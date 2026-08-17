@@ -8,7 +8,7 @@ export function Hero() {
       {/* Background with overlay */}
       <div 
         className="absolute inset-0 z-0 opacity-40 bg-cover bg-center transition-all duration-1000"
-        style={{ backgroundImage: `url("/assets/hero-bg.jpg?v=final")` }}
+        style={{ backgroundImage: `url("https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&q=80&w=2000")` }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950/80 to-zinc-950 pointer-events-none"></div>
         <div className="absolute inset-0 bg-blue-500/10 mix-blend-overlay pointer-events-none"></div>

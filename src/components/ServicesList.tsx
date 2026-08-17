@@ -98,12 +98,7 @@ function ImageGallery({ images: initialImages, serviceId }: { images: string[], 
       <AnimatePresence mode="wait">
         <motion.img
           key={currentIndex}
-          src={localImage}
-          onError={(e) => {
-             if (!e.currentTarget.src.includes('unsplash')) {
-                e.currentTarget.src = initialImages[currentIndex];
-             }
-          }}
+          src={initialImages[currentIndex]}
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
